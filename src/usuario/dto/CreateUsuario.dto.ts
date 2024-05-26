@@ -2,16 +2,6 @@ import { Transform } from "class-transformer";
 import { IsDate, IsDateString, IsEmail, IsNotEmpty, IsString, Length, Matches, MaxLength } from "class-validator";
 import { CpfIsUniqueValidator, IsUniqueCpf } from "../validacao/CpfIsUnique.validator";
 
-// +id: int
-// email: string
-// senha: string
-// telefone: string
-// tipo: char
-// cpf: string
-// cep: string
-// link_foto_perfil: string
-// status: char
-
 export class CreateUsuarioDTO {
 
     @IsNotEmpty({ message: 'O nome não pode ser vazio' })

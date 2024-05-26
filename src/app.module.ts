@@ -16,7 +16,7 @@ import { UsuarioModule } from './usuario/usuario.module';
     inject: [PostgresConfigService]
   }),
   UsuarioModule],
-  controllers: [UsuarioController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}
