@@ -78,20 +78,42 @@ jobs:
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
 
-  run_image_in_oci:
-    name: Run image in OCI server
+  deploy_container_oci:
     runs-on: ubuntu-latest
+    name: Run container in oci
     needs: push_to_registry
+
     steps:
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_KEY_PASS }}
-          script: |
-            podman login docker.io -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-            docker pull ${{ secrets.DOCKER_USERNAME }}/backend-conserta-aqui:latest
-            docker rm -f backend-conserta-aqui
-            docker run -d -p ${{ secrets.APPLICATION_PORT }}:3000 --name backend-conserta-aqui ${{ secrets.DOCKER_USERNAME }}/backend-conserta-aqui
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup SSH
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SSH_KEY_PASSWORD: ${{ secrets.SSH_KEY_PASS }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keygen -p -P "$SSH_KEY_PASSWORD" -N "" -f ~/.ssh/id_rsa
+
+    - name: Prepare script with secrets
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        APPLICATION_PORT: ${{ secrets.APPLICATION_PORT }}
+      run: |
+        sed -i 's/SECRET1_PLACEHOLDER/'"$DOCKER_USERNAME"'/g' deploy.sh
+        sed -i 's/SECRET2_PLACEHOLDER/'"$DOCKER_PASSWORD"'/g' deploy.sh
+        sed -i 's/SECRET3_PLACEHOLDER/'"$APPLICATION_PORT"'/g' deploy.sh
+        chmod +x deploy.sh
+
+    - name: Copy script to remote server
+      run: scp -o "StrictHostKeyChecking=no" deploy.sh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/opc/deploy.sh
+
+    - name: Run script on remote server
+      run: ssh -o "StrictHostKeyChecking=no" ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'bash /home/opc/deploy.sh'
+
+    - name: Clean up
+      run: rm deploy.sh
