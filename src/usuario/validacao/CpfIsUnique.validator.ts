@@ -9,14 +9,14 @@ import { Repository } from "typeorm";
 @ValidatorConstraint({ async: true })
 export class CpfIsUniqueValidator implements ValidatorConstraintInterface {
     constructor(        
-        @InjectRepository(Usuario)
-    private readonly usuarioRepository: Repository<Usuario>){}
+    private readonly usuarioRepository: UsuarioRepository){}
 
     async validate(value: any, validationArguments?: ValidationArguments): Promise<boolean> {
         const userWithCpf = await this.usuarioRepository.findOneBy({
             cpf: value
         });
-        return userWithCpf !== undefined
+        
+        return userWithCpf === null
     }
     
 }
