@@ -12,17 +12,26 @@ jobs:
   create_env_file:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Make envfile
-        uses: SpicyPizza/create-envfile@v2.0
-        with:
-          envkey_DB_HOST: ${{ secrets.DB_HOST }}
-          envkey_DB_NAME: ${{ secrets.DB_NAME }}
-          envkey_DB_PORT: ${{ secrets.DB_PORT }}
-          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          file_name: .env
-          fail_on_empty: false
-          sort_keys: false
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        RUN: |
+          echo "DB_HOST=${DB_HOST}" >> .env
+          echo "DB_NAME=${DB_NAME}" >> .env
+          echo "DB_PORT=${DB_PORT}" >> .env
+          echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
+          echo "DB_USERNAME=${DB_USERNAME}" >> .env
+          
+      - name: test env
+        run: cat .env
+
       - name: Upload .env file
         uses: actions/upload-artifact@v4
         with:
