@@ -19,6 +19,9 @@ export class Usuario{
     email: string;
 
     @Column()
+    nome: string;
+
+    @Column()
     senha: string;
 
     @Column()

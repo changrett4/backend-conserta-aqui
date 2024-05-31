@@ -14,7 +14,6 @@ export class UsuarioController {
 
     @Post('/login')
     async loginUsuario(@Body() dadosLogin:LoginUsuarioDTO){
-        console.log(dadosLogin);
         return this.usuarioService.login(dadosLogin);
     } 
 }
