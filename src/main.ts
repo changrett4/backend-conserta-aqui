@@ -8,6 +8,8 @@ async function bootstrap() {
 
   app.setGlobalPrefix("api/conserta-aqui/v1");
 
+  app.enableCors();
+
   app.useGlobalPipes(
     new ValidationPipe({
       transform:true,
