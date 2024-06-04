@@ -5,6 +5,7 @@ import { PostgresConfigService } from './config/postgres.config.service';
 import { ConfigModule } from '@nestjs/config';
 import { UsuarioModule } from './usuario/usuario.module';
 import { BaseController } from './base.controller';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -16,7 +17,8 @@ import { BaseController } from './base.controller';
     useClass: PostgresConfigService,
     inject: [PostgresConfigService]
   }),
-  UsuarioModule],
+  UsuarioModule,
+  AuthModule],
   controllers: [BaseController],
   providers: [],
 })
