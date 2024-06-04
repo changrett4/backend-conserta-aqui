@@ -14,6 +14,7 @@ async function bootstrap() {
   .setDescription("API do projeto Conserta Aqui")
   .setVersion("1.0")
   .addTag("usuarios")
+  .addTag('auth')
   .addBearerAuth()
   .build();
 
