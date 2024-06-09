@@ -26,7 +26,9 @@ export class Servico{
     @DeleteDateColumn({name:"deleted_at"})
     deletedAt: Date
     
-    @ManyToOne(()=> Subcategoria)
+    @ManyToOne(()=> Subcategoria,{
+        eager:true
+    })
     @JoinColumn({name: 'subcategoria_id',referencedColumnName:'id'})
     subcategoria: Subcategoria
 

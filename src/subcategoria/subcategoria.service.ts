@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { SubcategoriaRepository } from './subcategoria.repository';
 import { CreateSubcategoriaDTO } from './dto/createSubcategoria.dto';
 import { Subcategoria } from './subcategoria.entity';
@@ -17,5 +17,15 @@ export class SubcategoriaService {
 
     async getAllByCategory(categoryId:number):Promise<Subcategoria[]>{
         return await this.subcategoriaRepository.findBy({categoria:{id: categoryId}});
+    }
+
+    async getSubcategoyById(subcategoryId:number):Promise<Subcategoria>{
+        const subcategoria = await this.subcategoriaRepository.findOneBy({
+            id:subcategoryId
+        });
+        if(!subcategoria){
+            throw new NotFoundException("Subcategoria não encontrada!")
+        }
+        return subcategoria;
     }
 }
