@@ -1,5 +1,5 @@
 import { Transform } from "class-transformer";
-import { IsDate, IsDateString, IsEmail, IsNotEmpty, IsString, Length, Matches, MaxLength } from "class-validator";
+import { IsDate, IsDateString, IsEmail, IsNotEmpty, IsOptional, IsString, Length, Matches, MaxLength } from "class-validator";
 import { CpfIsUniqueValidator, IsUniqueCpf } from "../validacao/CpfIsUnique.validator";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsUniqueEmail } from "../validacao/EmailIsUnique.validator";
@@ -26,8 +26,12 @@ export class CreateUsuarioDTO {
     @MaxLength(1)
     tipo: string;
 
+    @IsString()
+    @IsOptional()
     descricao: string;
 
+    @IsString()
+    @IsOptional()
     fotoPerfil:string;
 
     @Length(11,11,{message:"O CPF deve possuir 11 caracteres!"})

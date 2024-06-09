@@ -1,6 +1,7 @@
 import { Subcategoria } from "../subcategoria/subcategoria.entity";
 import { Usuario } from "../usuario/usuario.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { ServicoFoto } from "./servicoFoto.entity";
 
 @Entity({name:'servico'})
 export class Servico{
@@ -12,6 +13,9 @@ export class Servico{
 
     @Column({type:'text'})
     descricao:string
+
+    @Column({type:'numeric', nullable: true, precision: 6, scale: 2})
+    preco:number
 
     @CreateDateColumn({name:"created_at"})
     createdAt: Date
@@ -29,5 +33,8 @@ export class Servico{
     @ManyToOne(()=>Usuario)
     @JoinColumn({name: 'prestador_id',referencedColumnName:'id'})
     usuario:Usuario
+
+    @OneToMany(()=> ServicoFoto, (servicoFoto)=> servicoFoto.servico)
+    servicoFotos: ServicoFoto[]
 
 }

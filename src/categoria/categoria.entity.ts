@@ -9,9 +9,6 @@ export class Categoria{
     @Column()
     titulo: string;
 
-    @Column({type:'text'})
-    descricao: string;
-
     @CreateDateColumn({name:"created_at"})
     createdAt: Date
 

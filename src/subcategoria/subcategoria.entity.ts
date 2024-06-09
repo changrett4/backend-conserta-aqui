@@ -10,9 +10,6 @@ export class Subcategoria{
     @Column()
     titulo: string;
 
-    @Column({type:'text'})
-    descricao: string;
-
     @CreateDateColumn({name:"created_at"})
     createdAt: Date
 
@@ -25,7 +22,7 @@ export class Subcategoria{
     @OneToMany(()=> Servico, (servico)=> servico.subcategoria)
     servicos: Servico[]
 
-    @ManyToOne(()=> Categoria)
+    @ManyToOne(()=> Categoria, (categoria) => categoria.subcategorias)
     @JoinColumn({name:'categoria_id',referencedColumnName:'id'})
     categoria: Categoria
 
