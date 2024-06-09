@@ -17,6 +17,12 @@ export class Servico{
     @Column({type:'numeric', nullable: true, precision: 6, scale: 2})
     preco:number
 
+    @Column({nullable:true})
+    localidade:string
+
+    @Column({nullable:true})
+    UF:string
+
     @CreateDateColumn({name:"created_at"})
     createdAt: Date
 

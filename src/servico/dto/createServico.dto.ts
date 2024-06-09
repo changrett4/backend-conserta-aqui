@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, Min } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsString, Length, Min } from "class-validator";
 import { Usuario } from "src/usuario/usuario.entity";
 
 export class CreateServicoDTO {
@@ -14,6 +14,15 @@ export class CreateServicoDTO {
     @IsOptional()
     @Min(0.01,{message:'O preço deve ser maior que zero!'})
     preco:number;
+
+    @IsString()
+    @IsOptional()
+    localidade:string
+
+    @IsString()
+    @IsOptional()
+    @Length(2,2)
+    UF:string
 
     @IsNumber()
     @Min(1,{message: "A subcategoria tem que ser válida!"})
