@@ -4,6 +4,7 @@ import { UsuarioRepository } from 'src/usuario/usuario.repository';
 import { JwtService } from '@nestjs/jwt';
 import { UsuarioService } from 'src/usuario/usuario.service';
 import { compare } from 'bcrypt';
+import { Usuario } from 'src/usuario/usuario.entity';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +13,7 @@ export class AuthService {
         private jwtService: JwtService
     ){}
 
-    async login(dadosLogin: LoginUsuarioDTO): Promise<{ access_token: string }>{
+    async login(dadosLogin: LoginUsuarioDTO): Promise<{ access_token: string, usuario:Usuario }>{
         const usuario = await this.userService.getUserByEmail(dadosLogin.email);
 
         if(usuario == null){
@@ -27,6 +28,7 @@ export class AuthService {
         const payload = { sub: usuario.id, cpf: usuario.cpf };
         return {
           access_token: await this.jwtService.signAsync(payload),
+          usuario
         };
 
         

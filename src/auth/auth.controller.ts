@@ -18,8 +18,8 @@ export class AuthController {
     } 
 
     
-    @Get('profile')
-    getProfile(@Request() request) {
-        return request.user;
-    }
+    // @Get('profile')
+    // getProfile(@Request() request) {
+    //     return request.user;
+    // }
 }
