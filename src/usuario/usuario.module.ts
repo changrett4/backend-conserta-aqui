@@ -7,11 +7,12 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Usuario } from "./usuario.entity";
 import { Servico } from "src/servico/servico.entity";
 import { Subcategoria } from "src/subcategoria/subcategoria.entity";
+import { EmailIsUnique } from "./validacao/EmailIsUnique.validator";
 
 @Module({
     imports: [TypeOrmModule.forFeature([Usuario,Servico,Subcategoria])],
     controllers: [UsuarioController],
-    providers: [ UsuarioRepository, CpfIsUniqueValidator, UsuarioService],
+    providers: [ UsuarioRepository, CpfIsUniqueValidator, EmailIsUnique, UsuarioService],
     exports: [UsuarioService]
 })
 export class UsuarioModule {}

@@ -13,7 +13,7 @@ export class AuthService {
     ){}
 
     async login(dadosLogin: LoginUsuarioDTO): Promise<{ access_token: string }>{
-        const usuario = await this.userService.getUserByCpf(dadosLogin.cpf);
+        const usuario = await this.userService.getUserByEmail(dadosLogin.email);
 
         if(usuario == null){
             throw new NotFoundException("Usuário com este cpf não encontrado");

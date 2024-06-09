@@ -1,8 +1,9 @@
-import { IsString } from "class-validator";
+import { IsEmail, IsString } from "class-validator";
 
 export class LoginUsuarioDTO {
-    @IsString()
-    cpf: string;
+
+    @IsEmail(undefined, { message: 'O e-mail informado é inválido!' })
+    email: string;
     @IsString()
     senha: string;
 }

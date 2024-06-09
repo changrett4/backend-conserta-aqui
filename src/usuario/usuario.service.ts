@@ -34,6 +34,18 @@ export class UsuarioService {
         return user;
     }
 
+    async getUserByEmail(email:string){
+        const user = await this.usuarioRepository.findOneBy({
+            email
+        });
+
+        if(!user){
+            throw new NotFoundException("Usuário com este e-mail não encontrado!")
+        }
+
+        return user;
+    }
+
     async getUserById(id: number): Promise<Usuario>{
         const user = await this.usuarioRepository.findOneBy({
             id

@@ -2,6 +2,7 @@ import { Transform } from "class-transformer";
 import { IsDate, IsDateString, IsEmail, IsNotEmpty, IsString, Length, Matches, MaxLength } from "class-validator";
 import { CpfIsUniqueValidator, IsUniqueCpf } from "../validacao/CpfIsUnique.validator";
 import { ApiProperty } from "@nestjs/swagger";
+import { IsUniqueEmail } from "../validacao/EmailIsUnique.validator";
 
 export class CreateUsuarioDTO {
 
@@ -9,6 +10,7 @@ export class CreateUsuarioDTO {
     nome: string;
 
     @IsEmail(undefined, { message: 'O e-mail informado é inválido!' })
+    @IsUniqueEmail({message: "Já existe usuário cadastrado com este email!"})
     email:string;
     
     @IsString()
@@ -24,11 +26,13 @@ export class CreateUsuarioDTO {
     @MaxLength(1)
     tipo: string;
 
+    descricao: string;
+
     fotoPerfil:string;
 
     @Length(11,11,{message:"O CPF deve possuir 11 caracteres!"})
     @ApiProperty({ example: "11111111111" })
-    @IsUniqueCpf({message: "Já existe usuário cadastrado com este CPF "})
+    @IsUniqueCpf({message: "Já existe usuário cadastrado com este CPF!"})
     cpf: string;
 
     @ApiProperty({ example: "01/01/2001" })
