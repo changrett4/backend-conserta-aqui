@@ -18,8 +18,9 @@ export class UsuarioController {
     @ApiOperation({summary: "Cria um usuário"})
     @Public()
     @Post()
-    async criarUsuario(@Body() dadosUsuario:CreateUsuarioDTO): Promise<Usuario>{
-        return this.usuarioService.create(dadosUsuario);
+    @UseInterceptors(FileInterceptor('file'))
+    async criarUsuario(@UploadedFile() file: Express.Multer.File,@Body() dadosUsuario:CreateUsuarioDTO): Promise<Usuario>{
+        return this.usuarioService.create(dadosUsuario, file);
     }
 
     @ApiOperation({summary: "Retorna dados do usuário pelo id"})
@@ -36,7 +37,8 @@ export class UsuarioController {
         try{
             return await this.cloudinaryService.uploadFile(file, 'usuarios');
         } catch(error){
-            throw new InternalServerErrorException(error.message)
+            throw new InternalServerErrorException(error.message);
+           
         }
         
     }

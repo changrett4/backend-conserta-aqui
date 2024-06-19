@@ -16,7 +16,7 @@ export class CloudinaryService {
     }
 
     async uploadFile(file: Express.Multer.File, folder: string): Promise<UploadApiResponse | UploadApiErrorResponse> {
-
+        if(!file) return null;
         return new Promise<UploadApiResponse>((resolve, reject) => {
             const uploadStream = cloudinary.uploader.upload_stream({ folder },(error,result)=>{
                 if(error) return reject(error)
@@ -26,5 +26,14 @@ export class CloudinaryService {
             
         })
     
+    }
+
+    async deleteFile(publicId: string){
+        if(!publicId) return null;
+        try{
+            await cloudinary.api.delete_resources([publicId]);
+        }catch(error){
+            throw new InternalServerErrorException(error.message)
+        }
     }
 }
