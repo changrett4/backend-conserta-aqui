@@ -15,7 +15,7 @@ export class EmailIsUnique implements ValidatorConstraintInterface {
         const userWithEmail = await this.usuarioRepository.findOneBy({
             email: value
         });
-        console.log(userWithEmail)
+      
         
         return userWithEmail === null
     }

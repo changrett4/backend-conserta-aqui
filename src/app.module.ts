@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { ServicoModule } from './servico/servico.module';
 import { CategoriaModule } from './categoria/categoria.module';
 import { SubcategoriaModule } from './subcategoria/subcategoria.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 
 @Module({
@@ -24,7 +25,8 @@ import { SubcategoriaModule } from './subcategoria/subcategoria.module';
   AuthModule,
   ServicoModule,
   CategoriaModule,
-  SubcategoriaModule],
+  SubcategoriaModule,
+  CloudinaryModule],
   controllers: [BaseController],
   providers: [],
 })

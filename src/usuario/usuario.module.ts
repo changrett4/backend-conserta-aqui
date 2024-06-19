@@ -8,9 +8,10 @@ import { Usuario } from "./usuario.entity";
 import { Servico } from "src/servico/servico.entity";
 import { Subcategoria } from "src/subcategoria/subcategoria.entity";
 import { EmailIsUnique } from "./validacao/EmailIsUnique.validator";
+import { CloudinaryModule } from "src/cloudinary/cloudinary.module";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Usuario,Servico,Subcategoria])],
+    imports: [TypeOrmModule.forFeature([Usuario,Servico,Subcategoria]), CloudinaryModule],
     controllers: [UsuarioController],
     providers: [ UsuarioRepository, CpfIsUniqueValidator, EmailIsUnique, UsuarioService],
     exports: [UsuarioService]
