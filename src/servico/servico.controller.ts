@@ -1,11 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, Request, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, Req, Request, UploadedFiles, UseInterceptors, ValidationPipe } from '@nestjs/common';
 import { ServicoService } from './servico.service';
 import { CreateServicoDTO } from './dto/createServico.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { Public } from 'src/auth/auth.decorator';
+import FiltersServicoDTO from './dto/filtersServico.dto';
+import { IsNumber } from 'class-validator';
+import { Servico } from './servico.entity';
 
-@Controller('servico')
+@Controller('/servico')
 @ApiTags('servico')
 @ApiBearerAuth()
 export class ServicoController {
@@ -16,6 +19,26 @@ export class ServicoController {
     async createService(@Body() createServicoDTO:CreateServicoDTO, @Request() request, @UploadedFiles() files: Array<Express.Multer.File>){
         return this.servicoService.create(createServicoDTO, request.user.sub, files);
     }
+
+    @Public()
+    @Get('/all')
+    async getAllServices(@Query(new ValidationPipe({
+        transform: true,
+        transformOptions: {enableImplicitConversion: true},
+        forbidNonWhitelisted: true
+    })) filtersServico: FiltersServicoDTO):Promise<Servico[]>{
+
+        return  this.servicoService.getAllServices(filtersServico);
+       
+    }
+
+    @Public()
+    @Get(':id')
+    async getServiceById(@Param('id', ParseIntPipe) id:number){
+        return this.servicoService.getServiceById(id);
+    }
+
+
 
     @Put(':id')
     async updateService(@Param('id') id:number ,@Body() createServicoDTO:CreateServicoDTO){
