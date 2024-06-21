@@ -10,7 +10,7 @@ export class CategoriaController {
     constructor(private categoriaService: CategoriaService){}
 
     @Public()
-    @Post('create')
+    @Post()
     async createCategory(@Body() createCategoryDto:CreateCategoriaDTO){
         return this.categoriaService.create(createCategoryDto);
     }

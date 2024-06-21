@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, Request } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, Request, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { ServicoService } from './servico.service';
 import { CreateServicoDTO } from './dto/createServico.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { Public } from 'src/auth/auth.decorator';
 
 @Controller('servico')
 @ApiTags('servico')
@@ -9,9 +11,10 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 export class ServicoController {
     constructor(private readonly servicoService:ServicoService){}
 
-    @Post('create')
-    async createService(@Body() createServicoDTO:CreateServicoDTO, @Request() request){
-        return this.servicoService.create(createServicoDTO, request.user.sub);
+    @Post()
+    @UseInterceptors(FilesInterceptor('files'))
+    async createService(@Body() createServicoDTO:CreateServicoDTO, @Request() request, @UploadedFiles() files: Array<Express.Multer.File>){
+        return this.servicoService.create(createServicoDTO, request.user.sub, files);
     }
 
     @Put(':id')
@@ -36,4 +39,11 @@ export class ServicoController {
     async getAllServiceByUser(@Param('id') id:number) {
         return this.servicoService.getAllServicesByUser(id);
     } 
+
+    @Public()
+    @Post('upload')
+    @UseInterceptors(FilesInterceptor('files'))
+    uploadFile(@UploadedFiles() files: Array<Express.Multer.File>) {
+      console.log(files);
+    }
 }

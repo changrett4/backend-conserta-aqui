@@ -15,7 +15,6 @@ export class CpfIsUniqueValidator implements ValidatorConstraintInterface {
         const userWithCpf = await this.usuarioRepository.findOneBy({
             cpf: value
         });
-        console.log(userWithCpf)
         
         return userWithCpf === null
     }

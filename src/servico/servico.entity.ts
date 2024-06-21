@@ -39,10 +39,10 @@ export class Servico{
     subcategoria: Subcategoria
 
     @ManyToOne(()=>Usuario)
-    @JoinColumn({name: 'prestador_id',referencedColumnName:'id'})
+    @JoinColumn({name: 'prestador_id',referencedColumnName:'id' })
     usuario:Usuario
 
-    @OneToMany(()=> ServicoFoto, (servicoFoto)=> servicoFoto.servico)
+    @OneToMany(()=> ServicoFoto, (servicoFoto)=> servicoFoto.servico, { cascade: ['insert','update','remove','soft-remove','recover']})
     servicoFotos: ServicoFoto[]
 
 }
