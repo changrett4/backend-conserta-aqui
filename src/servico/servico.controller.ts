@@ -34,7 +34,7 @@ export class ServicoController {
 
     @Public()
     @Get(':id')
-    async getServiceById(@Param('id', ParseIntPipe) id:number){
+    async getServiceById(@Param('id', ParseIntPipe) id:number): Promise<Servico>{
         return this.servicoService.getServiceById(id);
     }
 
