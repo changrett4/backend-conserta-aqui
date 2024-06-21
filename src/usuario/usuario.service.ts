@@ -29,7 +29,7 @@ export class UsuarioService {
             return this.usuarioRepository.save(newUser);
 
         } catch (error) {
-            await this.cloudinaryService.deleteFile(publicId);
+            if(publicId) await this.cloudinaryService.deleteFile([publicId]);
             throw new InternalServerErrorException("Erro ao salvar usuário: " + error.message);
         }
 

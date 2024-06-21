@@ -28,10 +28,10 @@ export class CloudinaryService {
     
     }
 
-    async deleteFile(publicId: string){
-        if(!publicId) return null;
+    async deleteFile(publicIds: string[]){
+        if(!publicIds) return null;
         try{
-            await cloudinary.api.delete_resources([publicId]);
+            await cloudinary.api.delete_resources(publicIds);
         }catch(error){
             throw new InternalServerErrorException(error.message)
         }

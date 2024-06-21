@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString, Length, Min } from "class-validator";
 import { Usuario } from "src/usuario/usuario.entity";
+import CreateServicoFotoDTO from "./createServicoFoto.dto";
 
 export class CreateServicoDTO {
     @IsString()
@@ -27,6 +28,8 @@ export class CreateServicoDTO {
     @IsNumber()
     @Min(1,{message: "A subcategoria tem que ser válida!"})
     subcategoriaId:number;
+
+    servicoFotos?:CreateServicoFotoDTO[];
 
 
 }

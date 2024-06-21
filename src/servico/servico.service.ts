@@ -1,29 +1,55 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { ServicoRepository } from './servico.repository';
 import { CreateServicoDTO } from './dto/createServico.dto';
 import { Servico } from './servico.entity';
 import { UsuarioService } from 'src/usuario/usuario.service';
 import { SubcategoriaService } from 'src/subcategoria/subcategoria.service';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { ServicoFoto } from './servicoFoto.entity';
+import CreateServicoFotoDTO from './dto/createServicoFoto.dto';
 
 @Injectable()
 export class ServicoService {
     constructor(private readonly servicoRepository:ServicoRepository, 
         private readonly usuarioService:UsuarioService,
-        private readonly subcategoriaService:SubcategoriaService ){}
+        private readonly subcategoriaService:SubcategoriaService,
+        private readonly cloudinaryService:CloudinaryService ){}
 
-    async create(createServicoDTO: CreateServicoDTO, userId:number):Promise<Servico>{
-        const usuario = await this.usuarioService.getUserById(userId);
-
-        const subcategoria = await this.subcategoriaService.getSubcategoyById(createServicoDTO.subcategoriaId);
-        if(!subcategoria){
-            throw new NotFoundException("Subcategoria não encontrada!")
+    async create(createServicoDTO: CreateServicoDTO, userId:number, files: Array<Express.Multer.File>):Promise<Servico>{
+        let fotos:string[] = [];
+        const servicoFotos:CreateServicoFotoDTO[] = []
+        try{
+            for(const foto of files){
+                const result = await this.cloudinaryService.uploadFile(foto,'sevicos');
+                fotos.push(result.public_id);
+                servicoFotos.push(new CreateServicoFotoDTO(result.secure_url));
+            }
+        } catch(err){
+            await this.cloudinaryService.deleteFile(fotos)
+            throw new InternalServerErrorException(err.message);
         }
-        const {subcategoriaId, ...servico} = createServicoDTO;
-        const newServiceObject = {...servico, subcategoria, usuario}
+            
+            const usuario = await this.usuarioService.getUserById(userId);
 
-        const newService = this.servicoRepository.create(newServiceObject);
-
-        return await this.servicoRepository.save(newService);
+            const subcategoria = await this.subcategoriaService.getSubcategoyById(createServicoDTO.subcategoriaId);
+            if(!subcategoria){
+                throw new NotFoundException("Subcategoria não encontrada!")
+            }
+            createServicoDTO.servicoFotos = servicoFotos;
+            const {subcategoriaId, ...servico} = createServicoDTO;
+            const newServiceObject = {...servico, subcategoria, usuario}
+            
+            
+    
+            const newService = this.servicoRepository.create(newServiceObject);
+            try{
+                return await this.servicoRepository.save(newService);
+            } catch(error){
+                await this.cloudinaryService.deleteFile(fotos);
+                throw new InternalServerErrorException(error.message);
+            }
+           
+        
 
 
     }
