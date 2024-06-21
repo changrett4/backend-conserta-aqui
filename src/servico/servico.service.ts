@@ -22,7 +22,10 @@ export class ServicoService {
             for(const foto of files){
                 const result = await this.cloudinaryService.uploadFile(foto,'sevicos');
                 fotos.push(result.public_id);
-                servicoFotos.push(new CreateServicoFotoDTO(result.secure_url));
+                const newServicoFoto = new CreateServicoFotoDTO()
+                newServicoFoto.linkFoto = result.secure_url; 
+                servicoFotos.push(newServicoFoto);
+                
             }
         } catch(err){
             await this.cloudinaryService.deleteFile(fotos)

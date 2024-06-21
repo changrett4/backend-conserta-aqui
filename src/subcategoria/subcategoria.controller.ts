@@ -10,7 +10,7 @@ export class SubcategoriaController {
     constructor(private readonly subcategoriaService:SubcategoriaService){}
 
     @Public()
-    @Post('create')
+    @Post()
     async createSubcategory(@Body() createSubcategoriaDTO:CreateSubcategoriaDTO){
         //console.log("AQUI")
         return this.subcategoriaService.create(createSubcategoriaDTO);

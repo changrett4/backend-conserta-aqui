@@ -1,5 +1,3 @@
 export default class CreateServicoFotoDTO{
-    constructor(linkfoto:string){
-        
-    }
+    linkFoto:string
 }

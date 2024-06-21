@@ -11,7 +11,7 @@ import { Public } from 'src/auth/auth.decorator';
 export class ServicoController {
     constructor(private readonly servicoService:ServicoService){}
 
-    @Post('create')
+    @Post()
     @UseInterceptors(FilesInterceptor('files'))
     async createService(@Body() createServicoDTO:CreateServicoDTO, @Request() request, @UploadedFiles() files: Array<Express.Multer.File>){
         return this.servicoService.create(createServicoDTO, request.user.sub, files);
