@@ -7,6 +7,7 @@ import { SubcategoriaService } from 'src/subcategoria/subcategoria.service';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { ServicoFoto } from './servicoFoto.entity';
 import CreateServicoFotoDTO from './dto/createServicoFoto.dto';
+import FiltersServicoDTO from './dto/filtersServico.dto';
 
 @Injectable()
 export class ServicoService {
@@ -78,6 +79,16 @@ export class ServicoService {
         return servico;
 
     }
+
+    async getAllServices(filtersServico: FiltersServicoDTO):Promise<Servico[]>{
+        const servicos = await this.servicoRepository.getAllServices(filtersServico);
+        
+        if(servicos.length ==0){
+            throw new NotFoundException("Nenhum serviço foi encontrado a partir desses filtros!");
+        }
+        return servicos;
+    }
+
 
     async updateService(serviceId:number, createServicoDTO: CreateServicoDTO):Promise<Servico>{
         const servico = await this.getServiceById(serviceId);
