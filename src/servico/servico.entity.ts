@@ -42,7 +42,7 @@ export class Servico{
     @JoinColumn({name: 'prestador_id',referencedColumnName:'id' })
     usuario:Usuario
 
-    @OneToMany(()=> ServicoFoto, (servicoFoto)=> servicoFoto.servico, { cascade: ['insert','update','remove','soft-remove','recover']})
+    @OneToMany(()=> ServicoFoto, (servicoFoto)=> servicoFoto.servico, { cascade: ['insert','update','remove','soft-remove','recover'],eager:true})
     servicoFotos: ServicoFoto[]
 
 }
