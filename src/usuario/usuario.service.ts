@@ -21,9 +21,14 @@ export class UsuarioService {
     async create(createUserDTO: CreateUsuarioDTO, userPhoto: Express.Multer.File): Promise<Usuario> {
         let publicId:string;
         try {
-            const uploadedFile = await this.cloudinaryService.uploadFile(userPhoto, 'usuarios');
-            publicId = uploadedFile.public_id;
-            createUserDTO.fotoPerfil = uploadedFile.secure_url;
+             
+            if(userPhoto){
+                console.log(userPhoto)
+                const uploadedFile = await this.cloudinaryService.uploadFile(userPhoto, 'usuarios');
+                publicId = uploadedFile.public_id;
+                createUserDTO.fotoPerfil = uploadedFile.secure_url;
+            }
+            
             createUserDTO.senha = await hash(createUserDTO.senha, parseInt(process.env.SALT));
             const newUser = this.usuarioRepository.create(createUserDTO);
             return this.usuarioRepository.save(newUser);
