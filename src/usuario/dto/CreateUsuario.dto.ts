@@ -1,4 +1,4 @@
-import { Transform } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 import { IsDate, IsDateString, IsEmail, IsNotEmpty, IsOptional, IsString, Length, Matches, MaxLength } from "class-validator";
 import { CpfIsUniqueValidator, IsUniqueCpf } from "../validacao/CpfIsUnique.validator";
 import { ApiProperty } from "@nestjs/swagger";
@@ -48,6 +48,7 @@ export class CreateUsuarioDTO {
         } 
       })
       @IsDate({message: "Este formato de data é inválido! O formado correto é dd/MM/yyyy"})
+    @Type(() => Date)
     dataNascimento: Date
 
 }
