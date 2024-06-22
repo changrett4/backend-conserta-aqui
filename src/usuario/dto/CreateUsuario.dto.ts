@@ -41,14 +41,14 @@ export class CreateUsuarioDTO {
 
     @ApiProperty({ example: "01/01/2001" })
     @Transform(({ value }) => {
-        value = value + '';
-        const [day, month, year] = value.split('/');
+        const [day, month, year] = value.split('/');  
         if(day && month && year){
+            const date = new Date(`${year}-${month}-${day}`)
             return new Date(`${year}-${month}-${day}`);
         } 
       })
       @IsDate({message: "Este formato de data é inválido! O formado correto é dd/MM/yyyy"})
-    @Type(() => Date)
+   
     dataNascimento: Date
 
 }
