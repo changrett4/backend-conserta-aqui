@@ -41,6 +41,7 @@ export class CreateUsuarioDTO {
 
     @ApiProperty({ example: "01/01/2001" })
     @Transform(({ value }) => {
+        value = value + '';
         const [day, month, year] = value.split('/');
         if(day && month && year){
             return new Date(`${year}-${month}-${day}`);
