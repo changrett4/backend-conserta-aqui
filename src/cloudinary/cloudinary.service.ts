@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { v2 as cloudinary, UploadApiResponse, UploadApiErrorResponse } from 'cloudinary';
 import { cloudinaryConfig } from './schemes/cloudinary.config';
-import { rejects } from 'assert';
 const toStream = require('buffer-to-stream')
 
 

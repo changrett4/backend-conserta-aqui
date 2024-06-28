@@ -2,9 +2,9 @@ import { Injectable, InternalServerErrorException, NotFoundException } from '@ne
 import { ServicoRepository } from './servico.repository';
 import { CreateServicoDTO } from './dto/createServico.dto';
 import { Servico } from './servico.entity';
-import { UsuarioService } from 'src/usuario/usuario.service';
-import { SubcategoriaService } from 'src/subcategoria/subcategoria.service';
-import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { UsuarioService } from '../usuario/usuario.service';
+import { SubcategoriaService } from '../subcategoria/subcategoria.service';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { ServicoFoto } from './servicoFoto.entity';
 import CreateServicoFotoDTO from './dto/createServicoFoto.dto';
 import FiltersServicoDTO from './dto/filtersServico.dto';
