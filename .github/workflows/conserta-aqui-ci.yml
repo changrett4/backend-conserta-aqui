@@ -34,11 +34,11 @@ jobs:
           echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
           echo "DB_USERNAME=${DB_USERNAME}" >> .env
           echo "SALT=${SALT}" >> .env
-          echo "JWT_KEY=${JWT_KEY} >> .env"
-          echo "CLOUD_NAME=${CLOUD_NAME} >> .env"
-          echo "API_KEY=${API_KEY} >> .env"
-          echo "API_SECRET=${API_SECRET} >> .env"
-          echo "TESTE=teste >> .env"
+          echo "JWT_KEY=${JWT_KEY}" >> .env
+          echo "CLOUD_NAME=${CLOUD_NAME}" >> .env
+          echo "API_KEY=${API_KEY}" >> .env
+          echo "API_SECRET=${API_SECRET}" >> .env
+          echo "TESTE=teste" >> .env
 
       - name: test env
         run: cat .env
