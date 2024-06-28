@@ -20,7 +20,6 @@ import {
 } from '@nestjs/swagger';
 import { Usuario } from './usuario.entity';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 
 @ApiBearerAuth()
 @ApiTags('usuarios')
@@ -28,7 +27,6 @@ import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 export class UsuarioController {
   constructor(
     private usuarioService: UsuarioService,
-    private readonly cloudinaryService: CloudinaryService,
   ) {}
 
   @ApiOperation({ summary: 'Cria um usuário' })

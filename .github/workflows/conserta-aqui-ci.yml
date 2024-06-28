@@ -22,12 +22,23 @@ jobs:
           DB_PORT: ${{ secrets.DB_PORT }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          SALT: ${{ secrets.SALT}}
+          JWT_KEY: ${{ secrets.JWT_KEY}}
+          CLOUD_NAME: ${{secrets.CLOUD_NAME}}
+          API_KEY: ${{secrets.API_KEY}}
+          API_SECRET: ${{secrets.API_SECRET}}
         run: |
           echo "DB_HOST=${DB_HOST}" >> .env
           echo "DB_NAME=${DB_NAME}" >> .env
           echo "DB_PORT=${DB_PORT}" >> .env
           echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
           echo "DB_USERNAME=${DB_USERNAME}" >> .env
+          echo "SALT=${SALT}" >> .env
+          echo "JWT_KEY=${JWT_KEY} >> .env"
+          echo "CLOUD_NAME=${CLOUD_NAME} >> .env"
+          echo "API_KEY=${API_KEY} >> .env"
+          echo "API_SECRET=${API_SECRET} >> .env"
+          echo "TESTE=teste >> .env"
 
       - name: test env
         run: cat .env
@@ -96,6 +107,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: download env file
+      uses: actions/download-artifact@v4
+      with:
+        name: env
+
     - name: Setup SSH
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -121,8 +137,8 @@ jobs:
     - name: Copy script to remote server
       run: scp -o "StrictHostKeyChecking=no" deploy.sh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/opc/deploy.sh
 
+    - name: Copy .env to remote server
+      run: scp -o "StrictHostKeyChecking=no" .env ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/opc/.env
+
     - name: Run script on remote server
       run: ssh -o "StrictHostKeyChecking=no" ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'bash /home/opc/deploy.sh'
-
-    - name: Clean up
-      run: rm deploy.sh

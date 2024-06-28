@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { SubcategoriaRepository } from './subcategoria.repository';
 import { CreateSubcategoriaDTO } from './dto/createSubcategoria.dto';
 import { Subcategoria } from './subcategoria.entity';
-import { CategoriaService } from 'src/categoria/categoria.service';
+import { CategoriaService } from '../categoria/categoria.service';
 
 @Injectable()
 export class SubcategoriaService {
