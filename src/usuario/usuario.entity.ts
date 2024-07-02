@@ -1,3 +1,5 @@
+import { Conversa } from "../conversa/conversa.entity";
+import { Mensagem } from "../conversa/mensagem.entity";
 import { Servico } from "../servico/servico.entity";
 import { Subcategoria } from "../subcategoria/subcategoria.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
@@ -49,5 +51,14 @@ export class Usuario{
     @ManyToMany(()=> Subcategoria,{nullable: true})
     @JoinTable()
     subcategorias: Subcategoria[]
+
+    @OneToMany(()=> Mensagem, (mensagem) => mensagem.remetente)
+    mensagensEnviadas:Mensagem[]
+
+    @OneToMany(()=>Mensagem, (mensagem)=>mensagem.destinatario, )
+    mensagensRecebidas:Mensagem[]
+
+    @OneToMany(()=>Conversa, (conversa)=>conversa.usuario)
+    conversas:Conversa[]
 
 }

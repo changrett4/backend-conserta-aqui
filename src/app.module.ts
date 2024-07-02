@@ -10,6 +10,7 @@ import { ServicoModule } from './servico/servico.module';
 import { CategoriaModule } from './categoria/categoria.module';
 import { SubcategoriaModule } from './subcategoria/subcategoria.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { ConversaModule } from './conversa/conversa.module';
 
 
 @Module({
@@ -26,7 +27,8 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
   ServicoModule,
   CategoriaModule,
   SubcategoriaModule,
-  CloudinaryModule],
+  CloudinaryModule,
+  ConversaModule],
   controllers: [BaseController],
   providers: [],
 })
