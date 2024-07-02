@@ -1,6 +1,6 @@
 import { CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Usuario } from "../usuario/usuario.entity";
-import { Mensagem } from "./mensagem.entity";
+import { Mensagem } from "../mensagem/mensagem.entity";
 import { Servico } from "../servico/servico.entity";
 
 @Entity({name:'conversas'})
@@ -15,7 +15,7 @@ export class Conversa{
     @JoinColumn({name:'usuario_id',referencedColumnName:'id'})
     usuario:Usuario
 
-    @ManyToOne(()=>Servico)
+    @ManyToOne(()=>Servico, {eager:true})
     @JoinColumn({name:'servico_id',referencedColumnName:'id'})
     servico:Servico
 

@@ -10,7 +10,15 @@
   <button id="sendButton">Send</button>
   <div id="messages"></div>
   <script>
-    const socket = io('http://localhost:80');
+    const socket = io('http://localhost:80',{
+      transportOptions: {
+        polling: {
+            extraHeaders: {
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsImNwZiI6IjA0OTM2MTM0MjAxIiwidHlwZSI6IlAiLCJpYXQiOjE3MTk5NDM2MjIsImV4cCI6MTcxOTk3OTYyMn0.Snl2ZSqvxxdmSlInaEq7tUslfl5cqcYmRYUYcUgBtZo', 
+            }
+        }
+    }
+    });
 
     function readFiles(files) {
       return new Promise((resolve, reject) => {

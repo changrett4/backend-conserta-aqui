@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Conversa } from "./conversa.entity";
+import { Conversa } from "src/conversa/conversa.entity";
 import { MensagemFoto } from "./mensagemFoto.entity";
 import { Usuario } from "../usuario/usuario.entity";
 

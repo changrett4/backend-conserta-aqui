@@ -11,6 +11,7 @@ import { CategoriaModule } from './categoria/categoria.module';
 import { SubcategoriaModule } from './subcategoria/subcategoria.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ConversaModule } from './conversa/conversa.module';
+import { MensagemModule } from './mensagem/mensagem.module';
 
 
 @Module({
@@ -28,7 +29,8 @@ import { ConversaModule } from './conversa/conversa.module';
   CategoriaModule,
   SubcategoriaModule,
   CloudinaryModule,
-  ConversaModule],
+  ConversaModule,
+  MensagemModule],
   controllers: [BaseController],
   providers: [],
 })
