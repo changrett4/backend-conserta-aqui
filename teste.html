@@ -3,6 +3,34 @@
 <head>
   <title>Socket.IO Text and Image Transfer</title>
   <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+  <style>
+    #messages {
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 300px;
+      overflow-y: scroll;
+      margin-bottom: 10px;
+    }
+    .message {
+      margin-bottom: 10px;
+      padding: 5px 10px;
+      border-radius: 10px;
+      max-width: 80%;
+    }
+    .message.sent {
+      background-color: #daf8e3;
+      text-align: right;
+      margin-left: auto;
+    }
+    .message.received {
+      background-color: #f1f1f1;
+    }
+    img {
+      max-width: 300px;
+      display: block;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
   <input type="file" id="imageInput" multiple>
@@ -66,9 +94,13 @@
 
     socket.on('message', (data) => {
       const messagesDiv = document.getElementById('messages');
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message');
+      messageDiv.classList.add(data.sender === clientId ? 'sent' : 'received');
+
       const p = document.createElement('p');
       p.textContent = data.text;
-      messagesDiv.appendChild(p);
+      messageDiv.appendChild(p);
       
       if (data.images) {
         data.images.forEach((imageBuffer) => {
@@ -77,9 +109,10 @@
           const img = document.createElement('img');
           img.src = url;
           img.style.width = '300px';
-          messagesDiv.appendChild(img);
+          messageDiv.appendChild(img);
         });
       }
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
     });
 
     socket.on('connect_error', (error) => {
