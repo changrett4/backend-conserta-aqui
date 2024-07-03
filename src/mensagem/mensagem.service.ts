@@ -18,20 +18,23 @@ export class MensagemService {
         let fotos:string[] = [];
         const mensagemFotos: CreateMensagemFotoDTO[] = [];
         try{    
-            for(const foto of createMessageDTO.images ){
+            const uploadPromises = createMessageDTO.images.map(async (foto) => {
                 const result = await this.cloudinaryService.uploadFile(foto, "fotomsg");
                 fotos.push(result.public_id);
                 const newMensagemFoto = new CreateMensagemFotoDTO();
                 newMensagemFoto.linkFoto = result.secure_url;
                 mensagemFotos.push(newMensagemFoto);
-            }
+            });
+            await Promise.all(uploadPromises);
         }catch(err){
             await this.cloudinaryService.deleteFile(fotos);
             throw new InternalServerErrorException(err.message);
         }
-        const remetente = await this.usuarioService.getUserById(createMessageDTO.senderId);
-        const destinatario = await this.usuarioService.getUserById(createMessageDTO.receieverId);
-        const conversa = await this.conversaService.getById(createMessageDTO.conversaId);
+        const [remetente, destinatario, conversa] = await Promise.all([
+            this.usuarioService.getUserById(createMessageDTO.senderId),
+            this.usuarioService.getUserById(createMessageDTO.receieverId),
+            this.conversaService.getById(createMessageDTO.conversaId)
+        ]);
         const newMessagePayload = {
             remetente,
             destinatario,

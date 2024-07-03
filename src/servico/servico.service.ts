@@ -20,22 +20,23 @@ export class ServicoService {
         let fotos:string[] = [];
         const servicoFotos:CreateServicoFotoDTO[] = []
         try{
-            for(const foto of files){
+
+            const uploadPromises = files.map(async (foto) => {
                 const result = await this.cloudinaryService.uploadFile(foto.buffer,'sevicos');
                 fotos.push(result.public_id);
                 const newServicoFoto = new CreateServicoFotoDTO()
                 newServicoFoto.linkFoto = result.secure_url; 
                 servicoFotos.push(newServicoFoto);
-                
-            }
+            });
+            await Promise.all(uploadPromises);
         } catch(err){
             await this.cloudinaryService.deleteFile(fotos)
             throw new InternalServerErrorException(err.message);
         }
-            
-            const usuario = await this.usuarioService.getUserById(userId);
+            const [usuario, subcategoria] = await Promise.all([
+                                            await this.usuarioService.getUserById(userId),
+                                            await this.subcategoriaService.getSubcategoyById(createServicoDTO.subcategoriaId)])
 
-            const subcategoria = await this.subcategoriaService.getSubcategoyById(createServicoDTO.subcategoriaId);
             if(!subcategoria){
                 throw new NotFoundException("Subcategoria não encontrada!")
             }
