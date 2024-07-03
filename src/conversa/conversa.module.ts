@@ -8,15 +8,16 @@ import { Servico } from 'src/servico/servico.entity';
 import { Mensagem } from '../mensagem/mensagem.entity';
 import { Conversa } from './conversa.entity';
 import { MensagemFoto } from '../mensagem/mensagemFoto.entity';
-import { MensagemModule } from 'src/mensagem/mensagem.module';
+
 import { ConversaRepository } from './conversa.repository';
 import { UsuarioModule } from 'src/usuario/usuario.module';
 import { ServicoModule } from 'src/servico/servico.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Usuario,Servico,Mensagem,Conversa,MensagemFoto]),MensagemModule, UsuarioModule, ServicoModule],
+  imports: [TypeOrmModule.forFeature([Usuario,Servico,Mensagem,Conversa,MensagemFoto]), UsuarioModule, ServicoModule],
   providers: [ConversaService, ConversaRepository],
-  controllers: [ConversaController]
+  controllers: [ConversaController],
+  exports: [ConversaService]
   
 })
 export class ConversaModule {}

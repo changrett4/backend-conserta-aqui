@@ -11,7 +11,7 @@ export class Conversa{
     @OneToMany(()=> Mensagem, (mensagem) => mensagem.conversa,{ cascade: ['insert','update','remove','soft-remove','recover']})
     mensagens:Mensagem[]
 
-    @ManyToOne(()=> Usuario)
+    @ManyToOne(()=> Usuario, {eager: true})
     @JoinColumn({name:'usuario_id',referencedColumnName:'id'})
     usuario:Usuario
 

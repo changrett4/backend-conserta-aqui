@@ -39,7 +39,7 @@ export class Servico{
     @JoinColumn({name: 'subcategoria_id',referencedColumnName:'id'})
     subcategoria: Subcategoria
 
-    @ManyToOne(()=>Usuario)
+    @ManyToOne(()=>Usuario, { eager:true})
     @JoinColumn({name: 'prestador_id',referencedColumnName:'id' })
     usuario:Usuario
 

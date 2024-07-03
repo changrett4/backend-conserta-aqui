@@ -48,4 +48,15 @@ export class ConversaService{
         return chats;
 
     }
+
+    async getById(conversaId:number): Promise<Conversa>{
+        const conversa = await this.conversaRepository.findOne({where: {
+            id: conversaId
+        }});
+
+        if(!conversa){
+            throw new NotFoundException("Conversa com esse id não encontrada!");
+        }
+        return conversa;
+    }
 }

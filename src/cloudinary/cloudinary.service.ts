@@ -15,14 +15,14 @@ export class CloudinaryService {
         console.log(cloudinaryConfig)
     }
 
-    async uploadFile(file: Express.Multer.File, folder: string): Promise<UploadApiResponse | UploadApiErrorResponse> {
+    async uploadFile(file: Uint8Array, folder: string): Promise<UploadApiResponse | UploadApiErrorResponse> {
         if(!file) return null;
         return new Promise<UploadApiResponse>((resolve, reject) => {
             const uploadStream = cloudinary.uploader.upload_stream({ folder },(error,result)=>{
                 if(error) return reject(error)
                 resolve(result)
             });
-            toStream(file.buffer).pipe(uploadStream);
+            toStream(file).pipe(uploadStream);
             
         })
     

@@ -1,5 +1,5 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Conversa } from "src/conversa/conversa.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Conversa } from "../conversa/conversa.entity";
 import { MensagemFoto } from "./mensagemFoto.entity";
 import { Usuario } from "../usuario/usuario.entity";
 
@@ -15,14 +15,23 @@ export class Mensagem {
     @Column({type: 'text'})
     texto: string;
 
-    @OneToMany(()=>MensagemFoto, (mensagemFoto) => mensagemFoto.mensagem, { cascade: ['insert','update','remove','soft-remove','recover']})
+    @OneToMany(()=>MensagemFoto, (mensagemFoto) => mensagemFoto.mensagem, { cascade: ['insert','update','remove','soft-remove','recover'], eager: true})
     mensagemFotos:MensagemFoto[]
 
-    @ManyToOne(()=> Usuario)
+    @ManyToOne(()=> Usuario, {eager:true})
     @JoinColumn({name:'remetente_id',referencedColumnName:'id'})
     remetente:Usuario
 
-    @ManyToOne(()=> Usuario)
+    @ManyToOne(()=> Usuario, {eager:true})
     @JoinColumn({name:'destinatario_id',referencedColumnName:'id'})
     destinatario:Usuario
+
+    @CreateDateColumn({name:"created_at"})
+    createdAt: Date
+
+    @UpdateDateColumn({name:"updated_at"})
+    updatedAt: Date
+
+    @DeleteDateColumn({name:"deleted_at"})
+    deletedAt: Date
 }

@@ -21,7 +21,7 @@ export class ServicoService {
         const servicoFotos:CreateServicoFotoDTO[] = []
         try{
             for(const foto of files){
-                const result = await this.cloudinaryService.uploadFile(foto,'sevicos');
+                const result = await this.cloudinaryService.uploadFile(foto.buffer,'sevicos');
                 fotos.push(result.public_id);
                 const newServicoFoto = new CreateServicoFotoDTO()
                 newServicoFoto.linkFoto = result.secure_url; 

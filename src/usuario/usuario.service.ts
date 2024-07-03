@@ -24,7 +24,7 @@ export class UsuarioService {
              
             if(userPhoto){
                 console.log(userPhoto)
-                const uploadedFile = await this.cloudinaryService.uploadFile(userPhoto, 'usuarios');
+                const uploadedFile = await this.cloudinaryService.uploadFile(userPhoto.buffer, 'usuarios');
                 publicId = uploadedFile.public_id;
                 createUserDTO.fotoPerfil = uploadedFile.secure_url;
             }

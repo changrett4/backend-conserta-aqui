@@ -1,7 +1,8 @@
-import { Body, Controller, Post, Request, Get } from "@nestjs/common";
+import { Body, Controller, Post, Request, Get, Param } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { ConversaService } from "./conversa.service";
 import { CreateConversaDTO } from "./dto/createConversa.dto";
+import { Public } from "../auth/auth.decorator";
 
 @Controller("conversa")
 @ApiTags("conversa")
@@ -17,6 +18,12 @@ export class ConversaController{
     @Get("all")
     async getAllByUser(@Request() request){
         return await this.conversaService.getAllByUser(request.user.sub, request.user.type);
+    }
+
+    @Public()
+    @Get(":id")
+    async getById(@Param('id') id:number){
+        return await this.conversaService.getById(id);
     }
 
 
