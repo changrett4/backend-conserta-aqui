@@ -2,6 +2,7 @@ import { Subcategoria } from "../subcategoria/subcategoria.entity";
 import { Usuario } from "../usuario/usuario.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ServicoFoto } from "./servicoFoto.entity";
+import { Conversa } from "../conversa/conversa.entity";
 
 @Entity({name:'servico'})
 export class Servico{
@@ -38,11 +39,14 @@ export class Servico{
     @JoinColumn({name: 'subcategoria_id',referencedColumnName:'id'})
     subcategoria: Subcategoria
 
-    @ManyToOne(()=>Usuario)
+    @ManyToOne(()=>Usuario, { eager:true})
     @JoinColumn({name: 'prestador_id',referencedColumnName:'id' })
     usuario:Usuario
 
     @OneToMany(()=> ServicoFoto, (servicoFoto)=> servicoFoto.servico, { cascade: ['insert','update','remove','soft-remove','recover'],eager:true})
     servicoFotos: ServicoFoto[]
+
+    @OneToMany(()=> Conversa, (conversa)=> conversa.servico )
+    conversas:Conversa[]
 
 }

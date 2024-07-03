@@ -14,6 +14,7 @@ import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Servico,Subcategoria,Usuario, ServicoFoto]), UsuarioModule, SubcategoriaModule, CloudinaryModule],
   providers: [ServicoService, ServicoRepository],
-  controllers: [ServicoController]
+  controllers: [ServicoController],
+  exports: [ServicoService]
 })
 export class ServicoModule {}
