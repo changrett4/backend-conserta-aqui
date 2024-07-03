@@ -1,10 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { LoginUsuarioDTO } from './dto/LoginUsuario.dto';
-import { UsuarioRepository } from 'src/usuario/usuario.repository';
 import { JwtService } from '@nestjs/jwt';
-import { UsuarioService } from 'src/usuario/usuario.service';
+import { UsuarioService } from '../usuario/usuario.service';
 import { compare } from 'bcrypt';
-import { Usuario } from 'src/usuario/usuario.entity';
+import { Usuario } from '../usuario/usuario.entity';
 
 @Injectable()
 export class AuthService {

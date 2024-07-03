@@ -6,7 +6,7 @@ import { Usuario } from "./usuario.entity";
 import { Repository } from "typeorm";
 import { hash } from "bcrypt";
 import 'dotenv/config';
-import { CloudinaryService } from "src/cloudinary/cloudinary.service";
+import { CloudinaryService } from "../cloudinary/cloudinary.service";
 import { UploadApiResponse, UploadApiErrorResponse } from 'cloudinary';
 
 
