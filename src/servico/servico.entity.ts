@@ -15,7 +15,7 @@ export class Servico{
     @Column({type:'text'})
     descricao:string
 
-    @Column({type:'numeric', nullable: true, precision: 6, scale: 2})
+    @Column({type:'numeric', nullable: true, precision: 8, scale: 2})
     preco:number
 
     @Column({nullable:true})
