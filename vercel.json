@@ -1,16 +1,16 @@
 {
   "version": 2,
   "env": {
-    "DB_HOST": "@DB_HOST",
-    "DB_PORT":"@DB_PORT",
-    "DB_USERNAME":"@DB_USERNAME",
-    "DB_NAME":"@DB_NAME",
-    "DB_PASSWORD":"@DB_PASSWORD",
-    "SALT":"@SALT",
-    "JWT_KEY":"@JWT_KEY",
-    "CLOUD_NAME":"@CLOUD_NAME",
-    "API_KEY":"@API_KEY",
-    "API_SECRET":"@API_SECRET"
+    "DB_HOST": "@db_host",
+    "DB_PORT": "@db_port",
+    "DB_USERNAME": "@db_username",
+    "DB_NAME": "@db_name",
+    "DB_PASSWORD": "@db_password",
+    "SALT": "@salt",
+    "JWT_KEY": "@jwt_key",
+    "CLOUD_NAME": "@cloud_name",
+    "API_KEY": "@api_key",
+    "API_SECRET": "@api_secret"
   },
   "builds": [
     {
