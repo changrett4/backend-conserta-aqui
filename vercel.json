@@ -1,23 +1,28 @@
 {
   "version": 2,
-  "env": [],
+  "env": {
+    "DB_HOST": "@DB_HOST",
+    "DB_PORT":"@DB_PORT",
+    "DB_USERNAME":"@DB_USERNAME",
+    "DB_NAME":"@DB_NAME",
+    "DB_PASSWORD":"@DB_PASSWORD",
+    "SALT":"@SALT",
+    "JWT_KEY":"@JWT_KEY",
+    "CLOUD_NAME":"@CLOUD_NAME",
+    "API_KEY":"@API_KEY",
+    "API_SECRET":"@API_SECRET"
+  },
   "builds": [
     {
       "src": "src/main.ts",
-      "use":"@vercel/node"
+      "use": "@vercel/node"
     }
   ],
-  "routes":[
+  "routes": [
     {
-        "src":"/(.*)",
-        "dest":"src/main.ts",
-        "methods": [
-            "GET",
-            "POST",
-            "PUT",
-            "DELETE",
-            "OPTIONS"
-        ]
+      "src": "/(.*)",
+      "dest": "src/main.ts",
+      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
     }
   ]
 }
