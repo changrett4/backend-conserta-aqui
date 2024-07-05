@@ -1,17 +1,5 @@
 {
   "version": 2,
-  "env": {
-    "DB_HOST": "@db_host",
-    "DB_PORT": "@db_port",
-    "DB_USERNAME": "@db_username",
-    "DB_NAME": "@db_name",
-    "DB_PASSWORD": "@db_password",
-    "SALT": "@salt",
-    "JWT_KEY": "@jwt_key",
-    "CLOUD_NAME": "@cloud_name",
-    "API_KEY": "@api_key",
-    "API_SECRET": "@api_secret"
-  },
   "builds": [
     {
       "src": "src/main.ts",
