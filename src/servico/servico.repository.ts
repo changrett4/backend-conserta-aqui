@@ -12,7 +12,8 @@ export class ServicoRepository extends Repository<Servico>{
     async getAllServices(filtersServico: FiltersServicoDTO):Promise<Servico[]>{
         let query = this.createQueryBuilder('servico')
         .leftJoinAndSelect('servico.subcategoria', 'subcategoria')
-        .leftJoinAndSelect('subcategoria.categoria','categoria');
+        .leftJoinAndSelect('subcategoria.categoria','categoria')
+        .leftJoinAndSelect('servico.servicoFotos','servicoFotos');
         if(filtersServico.texto){
             query = query.andWhere('servico.titulo LIKE :texto OR servico.descricao LIKE :texto',{texto: `%${filtersServico.texto}%`})
         }
