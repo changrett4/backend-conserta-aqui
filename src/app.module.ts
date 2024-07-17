@@ -11,6 +11,7 @@ import { SubcategoriaModule } from './subcategoria/subcategoria.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ConversaModule } from './conversa/conversa.module';
 import { MensagemModule } from './mensagem/mensagem.module';
+import { NegociacaoModule } from './negociacao/negociacao.module';
 
 
 @Module({
@@ -29,7 +30,8 @@ import { MensagemModule } from './mensagem/mensagem.module';
   SubcategoriaModule,
   CloudinaryModule,
   ConversaModule,
-  MensagemModule],
+  MensagemModule,
+  NegociacaoModule],
   controllers: [BaseController],
   providers: [],
 })

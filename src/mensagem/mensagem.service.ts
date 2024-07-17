@@ -14,12 +14,12 @@ export class MensagemService {
         private readonly usuarioService: UsuarioService,
         private readonly conversaService: ConversaService){}
 
-    async createMessage(createMessageDTO: CreateMensagemDTO){
+    async createMessage(createMessageDTO: CreateMensagemDTO): Promise<Mensagem>{
         let fotos:string[] = [];
         const mensagemFotos: CreateMensagemFotoDTO[] = [];
         try{    
             const uploadPromises = createMessageDTO.images.map(async (foto) => {
-                const result = await this.cloudinaryService.uploadFile(foto, "fotomsg");
+                const result = await this.cloudinaryService.uploadFile(foto.buffer, "fotomsg");
                 fotos.push(result.public_id);
                 const newMensagemFoto = new CreateMensagemFotoDTO();
                 newMensagemFoto.linkFoto = result.secure_url;
@@ -51,6 +51,13 @@ export class MensagemService {
         }
     }
 
+    async deleteMessage(id:number){
+        const mensagem = await this.findOneById(id);
+        
+        await this.mensagemRepository.softDelete(mensagem);
+
+    }
+
     async getMessagesByConversaId(conversaId:number):Promise<Mensagem[]>{
         const messages = this.mensagemRepository.findBy({
             conversa:{
@@ -61,6 +68,18 @@ export class MensagemService {
             throw new NotFoundException("Mensagens não encontradas nessa conversa!")
         }
         return messages;
+    }
+
+    async findOneById(id:number){
+        const mensagem = await this.mensagemRepository.findOneBy({
+            id
+        });
+
+        if(!mensagem){
+            throw new NotFoundException("Mensagem não encontrada!");
+        }
+        
+        return mensagem;
     }
 
 }
