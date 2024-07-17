@@ -59,4 +59,10 @@ export class ConversaService{
         }
         return conversa;
     }
+
+    async deleteConversa(id:number){
+        const conversa = await this.getById(id);
+
+        await this.conversaRepository.softDelete(conversa);
+    }
 }

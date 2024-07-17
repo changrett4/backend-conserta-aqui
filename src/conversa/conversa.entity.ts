@@ -2,6 +2,7 @@ import { CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneT
 import { Usuario } from "../usuario/usuario.entity";
 import { Mensagem } from "../mensagem/mensagem.entity";
 import { Servico } from "../servico/servico.entity";
+import { Negociacao } from "../negociacao/entities/negociacao.entity";
 
 @Entity({name:'conversas'})
 export class Conversa{
@@ -14,6 +15,9 @@ export class Conversa{
     @ManyToOne(()=> Usuario, {eager: true})
     @JoinColumn({name:'usuario_id',referencedColumnName:'id'})
     usuario:Usuario
+
+    @OneToMany(()=> Negociacao, (negociacao) => negociacao.conversa,{ cascade: ['insert','update','remove','soft-remove','recover']} )
+    conversas: Conversa[]
 
     @ManyToOne(()=>Servico, {eager:true})
     @JoinColumn({name:'servico_id',referencedColumnName:'id'})

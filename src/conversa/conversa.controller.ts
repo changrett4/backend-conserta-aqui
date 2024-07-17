@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Request, Get, Param } from "@nestjs/common";
+import { Body, Controller, Post, Request, Get, Param, Delete } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { ConversaService } from "./conversa.service";
 import { CreateConversaDTO } from "./dto/createConversa.dto";
@@ -26,5 +26,9 @@ export class ConversaController{
         return await this.conversaService.getById(id);
     }
 
-
+    @Delete(":id")
+    async deleteConversa(@Param('id') id:number){
+        await this.conversaService.deleteConversa(id)
+        return {msg: 'Conversa apagada com sucesso!'}
+    }
 }
