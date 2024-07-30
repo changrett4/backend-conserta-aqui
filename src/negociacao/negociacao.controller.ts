@@ -21,6 +21,11 @@ export class NegociacaoController {
     return await this.negociacaoService.findOne(id);
   }
 
+  @Get('conversa/:id')
+  async findOneByConversa(@Param(':id') idConversa:number){
+    return await this.negociacaoService.findOneNegociacaoByConversa(idConversa);
+  }
+
   @Patch(':id')
   async update(@Param('id') id: number, @Body() updateNegociacaoDTO:UpdateNegociacaoDto){
       updateNegociacaoDTO.id = id;

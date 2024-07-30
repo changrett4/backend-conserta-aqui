@@ -33,16 +33,28 @@ export class NegociacaoService {
 
 
   async findOne(id: number) {
-    const negociacao = this.negociacaoRepository.findOne({
+    const negociacao = await this.negociacaoRepository.findOne({
       where: {
         id
       }
     });
 
     if(!negociacao){
-      throw new NotFoundException("Conversa com esse id não encontrada!");
+      throw new NotFoundException("Negociacao com esse id não encontrada!");
   }
   return negociacao;
+  }
+
+  async findOneNegociacaoByConversa(idConversa: number){
+    const negociacao = await this.negociacaoRepository.findOneBy({
+      conversa:{
+        id: idConversa
+      }
+    })
+    if(!negociacao){
+      throw new NotFoundException("Não existe negociação associada a essa conversa!");
+  } 
+  return negociacao
   }
 
 
